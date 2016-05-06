@@ -30,7 +30,7 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        updateStudentLocations()
+        loadStudentLocations()
       /*  let parameters: [String: AnyObject] = [Constants.ParseParameterKeys.Limit : Constants.ParseParameterValues.Limit]
         ParseClient.sharedInstance().getStudentLocations(parameters) { (success, studentLocations, errorString) in
             performUIUpdatesOnMain {
@@ -68,7 +68,7 @@ class MapViewController: UIViewController {
         updateStudentLocations()
     }
     
-    func updateStudentLocations() {
+    func loadStudentLocations() {
         let parameters: [String: AnyObject] = [Constants.ParseParameterKeys.Limit : Constants.ParseParameterValues.Limit]
         ParseClient.sharedInstance().getStudentLocations(parameters) { (success, studentLocations, errorString) in
             performUIUpdatesOnMain {

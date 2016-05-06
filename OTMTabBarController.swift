@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+
 class OTMTabBarController: UITabBarController {
     
     var studentLocations: [StudentLocation] = []
@@ -30,24 +32,17 @@ class OTMTabBarController: UITabBarController {
     
 
     @IBAction func refreshButtonPressed(sender: AnyObject) {
-            print("Refresh button pressed")
-            print("Presented view controller = \(self.selectedViewController)")
-            self.selectedViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                
-            })
-            //self.storyboard?.instantiateInitialViewController()
-        
-        
-            //self.presentedViewController?.dismissViewControllerAnimated(true, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
-        
-        
-        /*print("Selected VC = \(selectedViewController)")
-        if ((selectedViewController? = "OnTheMap.MapViewContr
-        oller") != nil) {
-            print("Map View selected")
-        }*/
 
+        if self.selectedViewController!.isKindOfClass(MapViewController) {
+            let controller = self.selectedViewController as! MapViewController
+            controller.refreshMapView()
+        } else if self.selectedViewController!.isKindOfClass(TableViewController){
+            let controller = self.selectedViewController as! TableViewController
+            controller.refreshTableView()
+        } else {
+            print("trying to refresh an unknown view")
+        }
     }
-    
-
 }
+
+

@@ -22,7 +22,10 @@ class TableViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        
+        loadStudentLocations()
+    }
+    
+    func loadStudentLocations() {
         let parameters: [String: AnyObject] = [Constants.ParseParameterKeys.Limit : Constants.ParseParameterValues.Limit]
         ParseClient.sharedInstance().getStudentLocations(parameters) { (success, studentLocations, errorString) in
             print ("Success from Table View!")
@@ -39,7 +42,14 @@ class TableViewController: UIViewController {
             }
         }
     }
+    
+    func refreshTableView() {
+        ParseClient.sharedInstance().hasFetchedStudentLocations = false
+        loadStudentLocations()
+    }
+    
 }
+
 
 extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     
