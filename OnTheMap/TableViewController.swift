@@ -10,73 +10,92 @@ import UIKit
 
 class TableViewController: UIViewController {
     
-    var studentLocations = [StudentLocation]()
-
+    
+    //Outlets
     @IBOutlet weak var locationsTableView: UITableView!
+    @IBOutlet weak var debugTextLabel: UILabel!
 
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        debugTextLabel.hidden = true
     }
+    
     
     override func viewWillAppear(animated: Bool) {
-        loadStudentLocations()
+        //Load student locations and present them
+        if ParseClient.sharedInstance().studentLocations == [] {
+            loadStudentLocations()
+        }
     }
     
+    //Load student locations if they have not been loaded earlier or when refresh is requested
     func loadStudentLocations() {
-        let parameters: [String: AnyObject] = [Constants.ParseParameterKeys.Limit : Constants.ParseParameterValues.Limit]
-        ParseClient.sharedInstance().getStudentLocations(parameters) { (success, studentLocations, errorString) in
-            print ("Success from Table View!")
-            print ("StudentLocations = \(studentLocations)")
-            self.studentLocations = studentLocations
-            performUIUpdatesOnMain {
-                if success {
-                    self.locationsTableView.reloadData()
-                    print("Table reloaded")
-                } else {
-                    //self.displayError(errorString!)
-                    print("Error = " + errorString!)
-                }
+        
+        //Get student locations
+        ParseClient.sharedInstance().getStudentLocations() { (success, studentLocations, errorString) in
+            //self.studentLocations = studentLocations
+
+            if success {
+                self.locationsTableView.reloadData()
+            } else {
+                self.displayError(errorString!)
             }
         }
     }
     
+    //Reload student locations and present them again
     func refreshTableView() {
         ParseClient.sharedInstance().hasFetchedStudentLocations = false
         loadStudentLocations()
     }
     
+    //Present messages to user
+    func displayError(error: String) {
+        print(error)
+        performUIUpdatesOnMain {
+            self.debugTextLabel.text = error
+            self.debugTextLabel.hidden = false
+        }
+    }
 }
 
 
 extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     
+    //Populate table with Student Locations
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("Arrived in table view")
         let CellReuseId = "StudentLocationCell"
         let image = UIImage(named: "map pin")
-        let studentLocation = studentLocations[indexPath.row]
+        let studentLocation = ParseClient.sharedInstance().studentLocations[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseId) as UITableViewCell!
+        
+        //Present student name and URL in call out box
         cell.textLabel!.text = studentLocation.title!
-        print("Student Location title =  \(studentLocation.title!)")
         cell.imageView?.image = image
         cell.detailTextLabel?.text = studentLocation.subtitle!
-        //cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
-
+        
         return cell
     }
     
+    //Provide number of rows in table
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Number of student locations = \(studentLocations.count)")
-        return studentLocations.count
+        print("Number of student locations = \(ParseClient.sharedInstance().studentLocations.count)")
+        return ParseClient.sharedInstance().studentLocations.count
     }
     
+    //Take action if user has selected a row
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let studentLocation = studentLocations[indexPath.row]
-        if studentLocation.mediaURL != nil {
+        let studentLocation = ParseClient.sharedInstance().studentLocations[indexPath.row]
+        
+        //Check URL is properly formatted and if so attempt to open it
+        if let url = NSURL(string: studentLocation.mediaURL!) {
             UIApplication.sharedApplication().openURL(NSURL(string: studentLocation.mediaURL!)!)
+        }
+        else {
+            debugTextLabel.hidden = false
+            displayError("Could not present web page")
         }
     }
 }

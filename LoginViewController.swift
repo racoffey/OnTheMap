@@ -9,17 +9,17 @@
 import Foundation
 import UIKit
 
-// MARK: - LoginViewController: UIViewController
+//  LoginViewController: UIViewController
 
 class LoginViewController: UIViewController {
     
-    // MARK: Properties
+    // Properties
     
     var appDelegate: AppDelegate!
     var keyboardOnScreen = false
-    var userID: String = ""
+ //   var userID: String = ""
     
-    // MARK: Outlets
+    // Outlets
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var signUpButton: UIButton!
     
-    // MARK: Life Cycle
+    // Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,25 +51,19 @@ class LoginViewController: UIViewController {
     
     func completeLogin() {
         performUIUpdatesOnMain {
+            //Present navigtation view controller when login is successful
             self.debugTextLabel.text = ""
             self.setUIEnabled(true)
-        /*
-            if let nc = self.storyboard!.instantiateInitialViewController() as? NavigationController {
-                nc.userID = self.userID
-                self.presentViewController(nc, animated: true, completion: nil)
-            }
-          */
-            
-            
-          
-            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("NavigationController") as! NavigationController
-            //controller.userID = self.userID
+            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("NavigationController") as! UINavigationController
             self.presentViewController(controller, animated: true, completion: nil)
-            let topController: OTMTabBarController = controller.topViewController as! OTMTabBarController
-            topController.userID = self.userID
+            
+            //Pass UserID to Tab Bar Controller for later use if user should attempt to post their student location
+    //        let topController: OTMTabBarController = controller.topViewController as! OTMTabBarController
+   //         topController.userID = self.userID
         }
     }
     
+    //Present message to user
     func displayError(error: String, debugLabelText: String? = nil) {
         print(error)
         performUIUpdatesOnMain {
@@ -78,36 +72,26 @@ class LoginViewController: UIViewController {
         }
     }
     
-    // MARK: Login
+    // Login
     
     @IBAction func loginPressed(sender: AnyObject) {
         
         userDidTapView(self)
         
+        //Check that username and password field have contents
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             debugTextLabel.text = "Username or Password Empty."
         } else {
+            
+            //Prepare parameters for login request
             setUIEnabled(false)
-            
-            
-            //    Steps for Authentication...
-            //    https://www.themoviedb.org/documentation/api/sessions
-            
-            //    Step 1: Create a request token
-            //Step 2: Ask the user for permission via the API ("login")
-            //   Step 3: Create a session ID
-            
-            //    Extra Steps...
-            //    Step 4: Get the user id ;)
-            //    Step 5: Go to the next view!
-            
-          //  getRequestToken()
             let parameters: [String: AnyObject] =
                 [Constants.UdacityParameterKeys.Username: usernameTextField.text!,
                 Constants.UdacityParameterKeys.Password: passwordTextField.text!]
-            print(parameters)
+
+            //Perform login request and if successful complete login
             UdacityClient.sharedInstance().getSessionID(parameters) { (success, sessionID, userID, errorString) in
-                if success { self.userID = userID! }
+              //  if success { self.userID = userID! }
                 performUIUpdatesOnMain {
                     if success {
                         self.completeLogin()
@@ -119,307 +103,24 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
+    //If signup button present then open appropriate Udacity page
     @IBAction func signUpButtonPressed(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string:"https://www.udacity.com/account/auth#!/signup")!)
     }
-
- /*
-    // MARK: TheMovieDB
-    
-    private func getRequestToken() {
-        
-        /* TASK: Get a request token, then store it (appDelegate.requestToken) and login with the token */
-        
-        /* 1. Set the parameters */
-        let methodParameters = [
-            Constants.TMDBParameterKeys.ApiKey: Constants.TMDBParameterValues.ApiKey
-        ]
-        
-        /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/authentication/token/new"))
-        
-        /* 4. Make the request */
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                print("There was an error with your request: \(error)")
-                return
-            }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                print("No data was returned by the request!")
-                return
-            }
-            
-            /* Parse the data! */
-            let parsedResult: AnyObject!
-            do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                print(parsedResult)
-            } catch {
-                print("Could not parse the data as JSON: '\(data)'")
-                return
-            }
-            
-            /* 6. Use the data! */
-            if let token: String = parsedResult[Constants.TMDBResponseKeys.RequestToken] as? String {
-                print(token)
-                self.setUIEnabled(true)
-                self.debugTextLabel.text = token
-                self.appDelegate.requestToken = token
-                self.loginWithToken(token)
-            } else {
-                print("Could not parse token.")
-            }
-        }
-        
-        /* 7. Start the request */
-        task.resume()
-    }
-    
-    private func loginWithToken(requestToken: String) {
-        
-        /* TASK: Login, then get a session id */
-        
-        /* 1. Set the parameters */
-        let methodParameters: [String: AnyObject] = [
-            Constants.TMDBParameterKeys.ApiKey: Constants.TMDBParameterValues.ApiKey,
-            Constants.TMDBParameterKeys.RequestToken: requestToken,
-            Constants.TMDBParameterKeys.Username: usernameTextField.text!,
-            Constants.TMDBParameterKeys.Password: passwordTextField.text!
-        ]
-        
-        /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/authentication/token/validate_with_login"))
-        print(request)
-        /* 4. Make the request */
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                print("There was an error with your request: \(error)")
-                return
-            }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                print("No data was returned by the request!")
-                return
-            }
-            
-            /* 5. Parse the data */
-            let parsedResult: AnyObject!
-            do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                print(parsedResult)
-            } catch {
-                print("Could not parse the data as JSON: '\(data)'")
-                return
-            }
-            
-            /* 6. Use the data! */
-            if let success: Bool = parsedResult[Constants.TMDBResponseKeys.Success] as? Bool {
-                if success { print("Login successful!")}
-                self.getSessionID(self.appDelegate.requestToken!)
-                //self.setUIEnabled(true)
-                //self.debugTextLabel.text = token as! String
-            } else {
-                print("Login not successful")
-            }
-            
-            /* 7. Start the request */
-        }
-        task.resume()
-    }
-    
-    private func getSessionID(requestToken: String) {
-        
-        /* TASK: Get a session ID, then store it (appDelegate.sessionID) and get the user's id */
-        
-        /* 1. Set the parameters */
-        /* 2/3. Build the URL, Configure the request */
-        /* 4. Make the request */
-        /* 5. Parse the data */
-        /* 6. Use the data! */
-        /* 7. Start the request */
-        
-        
-        /* 1. Set the parameters */
-        let methodParameters: [String: AnyObject] = [
-            Constants.TMDBParameterKeys.ApiKey: Constants.TMDBParameterValues.ApiKey,
-            Constants.TMDBParameterKeys.RequestToken: requestToken
-        ]
-        
-        /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/authentication/session/new"))
-        print(request)
-        
-        /* 4. Make the request */
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
-            
-            func displayError(error: String, debugLabelText: String? = nil) {
-                print(error)
-                performUIUpdatesOnMain {
-                    self.setUIEnabled(true)
-                    self.debugTextLabel.text = "Login Failed (Session ID)."
-                }
-            }
-            
-            
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                print("There was an error with your request: \(error)")
-                return
-            }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status code other than 2xx! Error code = ")
-                print((response as? NSHTTPURLResponse)?.statusCode)
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                print("No data was returned by the request!")
-                return
-            }
-            
-            /* 5. Parse the data */
-            let parsedResult: AnyObject!
-            do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                print(parsedResult)
-            } catch {
-                print("Could not parse the data as JSON: '\(data)'")
-                return
-            }
-            
-            /* 6. Use the data! */
-            if let sessionid: String = parsedResult[Constants.TMDBResponseKeys.SessionID] as? String {
-                print("Session id ")
-                print(sessionid)
-                self.appDelegate.sessionID = sessionid
-                self.getUserID(sessionid)
-            } else {
-                print("Could not retrieve User ID")
-            }
-            
-            /* 7. Start the request */
-        }
-        task.resume()
-        completeLogin()
-    }
-    
-    private func getUserID(sessionID: String) {
-        
-        /* TASK: Get the user's ID, then store it (appDelegate.userID) for future use and go to next view! */
-        
-        /* 1. Set the parameters */
-        /* 2/3. Build the URL, Configure the request */
-        /* 4. Make the request */
-        /* 5. Parse the data */
-        /* 6. Use the data! */
-        /* 7. Start the request */
-        
-        
-        /* 1. Set the parameters */
-        let methodParameters: [String: AnyObject] = [
-            Constants.TMDBParameterKeys.ApiKey: Constants.TMDBParameterValues.ApiKey,
-            Constants.TMDBParameterKeys.SessionID: sessionID
-        ]
-        
-        /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/account"))
-        print(request)
-        
-        /* 4. Make the request */
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
-            
-            func displayError(error: String, debugLabelText: String? = nil) {
-                print(error)
-                performUIUpdatesOnMain {
-                    self.setUIEnabled(true)
-                    self.debugTextLabel.text = "Login Failed (User ID)."
-                }
-            }
-            
-            
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                print("There was an error with your request: \(error)")
-                return
-            }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status code other than 2xx! Error code = ")
-                print((response as? NSHTTPURLResponse)?.statusCode)
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                print("No data was returned by the request!")
-                return
-            }
-            
-            /* 5. Parse the data */
-            let parsedResult: AnyObject!
-            do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                print(parsedResult)
-            } catch {
-                print("Could not parse the data as JSON: '\(data)'")
-                return
-            }
-            
-            /* 6. Use the data! */
-            if let userid: Int = parsedResult[Constants.TMDBResponseKeys.UserID] as? Int {
-                self.appDelegate.userID = userid
-                print("User Id = ")
-                print(userid)
-            } else {
-                print("Could not retrieve User ID")
-            }
-            
-            /* 7. Start the request */
-        }
-        task.resume()
-
-        
-    }*/
 }
 
-// MARK: - LoginViewController: UITextFieldDelegate
+// LoginViewController: UITextFieldDelegate
 
 extension LoginViewController: UITextFieldDelegate {
     
-    // MARK: UITextFieldDelegate
+    // UITextFieldDelegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    // MARK: Show/Hide Keyboard
+    // Show/Hide Keyboard
     
     func keyboardWillShow(notification: NSNotification) {
         if !keyboardOnScreen {
@@ -461,7 +162,7 @@ extension LoginViewController: UITextFieldDelegate {
     }
 }
 
-// MARK: - LoginViewController (Configure UI)
+// LoginViewController - configure Login User Interface
 
 extension LoginViewController {
     

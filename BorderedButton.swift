@@ -8,11 +8,11 @@
 
 import UIKit
 
-// MARK: - BorderedButton: Button
+// BorderedButton: Button
 
 class BorderedButton: UIButton {
     
-    // MARK: Properties
+    // Properties
     
     // constants for styling and configuration
     let darkerBlue = UIColor(red: 0.0, green: 0.298, blue: 0.686, alpha:1.0)
@@ -25,7 +25,7 @@ class BorderedButton: UIButton {
     var backingColor: UIColor? = nil
     var highlightedBackingColor: UIColor? = nil
     
-    // MARK: Initialization
+    // Initialization
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -47,7 +47,7 @@ class BorderedButton: UIButton {
         titleLabel?.font = UIFont.systemFontOfSize(titleLabelFontSize)
     }
     
-    // MARK: Setters
+    // Setters
     
     private func setBackingColor(newBackingColor: UIColor) {
         if let _ = backingColor {
@@ -61,7 +61,7 @@ class BorderedButton: UIButton {
         backingColor = highlightedBackingColor
     }
     
-    // MARK: Tracking
+    // Tracking
     
     override func beginTrackingWithTouch(touch: UITouch, withEvent: UIEvent?) -> Bool {
         backgroundColor = highlightedBackingColor
@@ -76,7 +76,7 @@ class BorderedButton: UIButton {
         backgroundColor = backingColor
     }
     
-    // MARK: Layout
+    // Layout
     
     override func sizeThatFits(size: CGSize) -> CGSize {
         let extraButtonPadding : CGFloat = phoneBorderedButtonExtraPadding

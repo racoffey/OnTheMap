@@ -10,18 +10,42 @@ import Foundation
 
 import UIKit
 
-// MARK: - Constants
+// Constants
 
 struct Constants {
     
-    // MARK: Udacity
+    // Udacity URL API parameters
     struct Udacity {
         static let ApiScheme = "https"
         static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
     }
     
-    // Parse
+    // Udacity Parameter Keys
+    struct UdacityParameterKeys {
+        static let SessionID = "session_id"
+        static let Username = "username"
+        static let Password = "password"
+    }
+    
+    
+    // Udacity Response Keys
+    struct UdacityResponseKeys {
+        static let StatusCode = "status"
+        static let ErrorMessage = "error"
+        static let SessionID = "id"
+        static let Session = "session"
+        static let Success = "success"
+        static let UserID = "key"
+        static let Account = "account"
+        static let Results = "results"
+        static let User = "user"
+        static let LastName = "last_name"
+        static let FirstName = "first_name"
+    }
+    
+    
+    // Parse URL API parameters
     struct Parse {
         static let ApiScheme = "https"
         static let ApiHost = "api.parse.com"
@@ -42,37 +66,8 @@ struct Constants {
         static let Limit = "100"
     }
     
-    // MARK: Udacity Parameter Keys
-    struct UdacityParameterKeys {
-      //  static let ApiKey = "api_key"
-      //  static let RequestToken = "request_token"
-        static let SessionID = "session_id"
-        static let Username = "username"
-        static let Password = "password"
-        //static let UserID = "user"
-    }
     
-/*    // MARK: TMDB Parameter Values
-    struct TMDBParameterValues {
-        static let ApiKey = "ce8752a5592c63bdece91470278e20b4"
-    }*/
-    
-    // MARK: Udacity Response Keys
-    struct UdacityResponseKeys {
-        static let StatusCode = "status"
-        static let ErrorMessage = "error"
-        static let SessionID = "id"
-        static let Session = "session"
-        static let Success = "success"
-        static let UserID = "key"
-        static let Account = "account"
-        static let Results = "results"
-        static let User = "user"
-        static let LastName = "last_name"
-        static let FirstName = "first_name"
-    }
-    
-    // MARK: Parse Response Keys
+    // Parse Response Keys
     struct ParseResponseKeys {
         static let StatusCode = "status"
         static let ErrorMessage = "error"
@@ -89,6 +84,7 @@ struct Constants {
         static let UpdatedAt = "updatedAt"
     }
     
+    // Parse request keys
     struct ParseRequestKeys {
         static let UniqueKey = "uniqueKey"
         static let FirstName = "firstName"
@@ -101,13 +97,7 @@ struct Constants {
     }
     
     
-    // MARK: UI
-/*    struct UI {
-        static let LoginColorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).CGColor
-        static let LoginColorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).CGColor
-        static let GreyColor = UIColor(red: 0.702, green: 0.863, blue: 0.929, alpha:1.0)
-        static let BlueColor = UIColor(red: 0.0, green:0.502, blue:0.839, alpha: 1.0)
-    }*/
+    // UI attriutes
     
         struct UI {
     static let LoginColorTop = UIColor(red: 0.900, green: 0.300, blue: 0.100, alpha: 1.0).CGColor
@@ -116,7 +106,7 @@ struct Constants {
     static let BlueColor = UIColor(red: 0.0, green:0.502, blue:0.839, alpha: 1.0)
     }
     
-    // MARK: Selectors
+    // Selectors
     struct Selectors {
         static let KeyboardWillShow: Selector = "keyboardWillShow:"
         static let KeyboardWillHide: Selector = "keyboardWillHide:"
