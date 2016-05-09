@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TzF-QX-KLJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TzF-QX-KLJ">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -134,41 +134,20 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" text="Location Text Field" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wXB-f1-iWC">
-                                                <rect key="frame" x="0.0" y="160" width="560" height="150"/>
+                                                <rect key="frame" x="0.0" y="160" width="560" height="190"/>
                                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l95-U9-nBG">
-                                                <rect key="frame" x="0.0" y="310" width="560" height="40"/>
-                                                <color key="backgroundColor" red="0.93059501262626254" green="0.93059501262626254" blue="0.93059501262626254" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="2ri-aa-TbF"/>
-                                                    <constraint firstAttribute="height" constant="40" id="Ek5-Tj-937"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                <state key="normal" title="Find on the map"/>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="2ri-aa-TbF"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="findLocationButtonPressed:" destination="VyP-CL-2a5" eventType="touchUpInside" id="NzD-ml-2tU"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.84392755679999998" green="0.84392755679999998" blue="0.84392755679999998" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="l95-U9-nBG" secondAttribute="bottom" constant="80" id="0cf-4r-TVi"/>
-                                            <constraint firstAttribute="trailing" secondItem="l95-U9-nBG" secondAttribute="trailing" id="7FT-Xs-19P"/>
                                             <constraint firstAttribute="width" constant="600" id="Ijs-Rj-aoH"/>
                                             <constraint firstAttribute="trailing" secondItem="wXB-f1-iWC" secondAttribute="trailing" id="Ux4-qL-JUM"/>
-                                            <constraint firstItem="l95-U9-nBG" firstAttribute="leading" secondItem="VGD-Yp-ayi" secondAttribute="leading" id="bl1-Lq-IdD"/>
+                                            <constraint firstAttribute="bottom" secondItem="wXB-f1-iWC" secondAttribute="bottom" id="ah8-TF-Sw9"/>
                                             <constraint firstItem="wXB-f1-iWC" firstAttribute="leading" secondItem="VGD-Yp-ayi" secondAttribute="leading" id="dAf-eq-BTy"/>
                                             <constraint firstItem="wXB-f1-iWC" firstAttribute="top" secondItem="9S5-6y-nXG" secondAttribute="bottom" id="lFO-Bg-HkC"/>
-                                            <constraint firstItem="l95-U9-nBG" firstAttribute="top" secondItem="wXB-f1-iWC" secondAttribute="bottom" id="lg0-UG-PoO"/>
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="92r-rj-DL4" userLabel="Second Stack View">
@@ -229,6 +208,26 @@
                                     <constraint firstAttribute="height" constant="20" id="G9M-wJ-qwU"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l95-U9-nBG">
+                                <rect key="frame" x="20" y="520" width="560" height="40"/>
+                                <color key="backgroundColor" red="0.93059501262626254" green="0.93059501262626254" blue="0.93059501262626254" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="2Am-fG-EH7"/>
+                                    <constraint firstAttribute="width" constant="200" id="2ri-aa-TbF"/>
+                                    <constraint firstAttribute="height" constant="40" id="Ek5-Tj-937"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Find on the map"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2Am-fG-EH7"/>
+                                        <exclude reference="2ri-aa-TbF"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="findLocationButtonPressed:" destination="VyP-CL-2a5" eventType="touchUpInside" id="NzD-ml-2tU"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="POW-9O-vEK" userLabel="Submit Button">
                                 <rect key="frame" x="20" y="280" width="560" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -265,8 +264,10 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.84392755681818177" green="0.84392755681818177" blue="0.84392755681818177" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="gck-rF-aCQ" firstAttribute="top" secondItem="O29-4h-hcZ" secondAttribute="bottom" id="0Qz-OX-J1H"/>
+                            <constraint firstItem="l95-U9-nBG" firstAttribute="trailing" secondItem="fX3-9w-fJj" secondAttribute="trailingMargin" id="DLL-2x-A2T"/>
                             <constraint firstItem="M8g-Ud-kQ5" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="FhP-eW-oOX"/>
                             <constraint firstItem="gck-rF-aCQ" firstAttribute="top" secondItem="O5f-eA-vpq" secondAttribute="bottom" constant="290" id="HbK-L4-4Ja"/>
                             <constraint firstItem="POW-9O-vEK" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="IOQ-4l-KZ3"/>
@@ -274,12 +275,17 @@
                             <constraint firstItem="O29-4h-hcZ" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="N26-R4-CcL"/>
                             <constraint firstAttribute="bottomMargin" secondItem="M8g-Ud-kQ5" secondAttribute="bottom" id="OmH-fV-SkV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M8g-Ud-kQ5" secondAttribute="trailing" id="S9W-Xe-dqj"/>
+                            <constraint firstItem="l95-U9-nBG" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="aRo-Xt-4oL"/>
                             <constraint firstItem="O5f-eA-vpq" firstAttribute="trailing" secondItem="fX3-9w-fJj" secondAttribute="trailingMargin" id="bbJ-uY-CR0"/>
                             <constraint firstItem="POW-9O-vEK" firstAttribute="trailing" secondItem="fX3-9w-fJj" secondAttribute="trailingMargin" id="eip-ZA-jsk"/>
+                            <constraint firstItem="gck-rF-aCQ" firstAttribute="top" secondItem="l95-U9-nBG" secondAttribute="bottom" constant="40" id="oyy-j1-fbh"/>
                             <constraint firstItem="M8g-Ud-kQ5" firstAttribute="top" secondItem="qKh-KT-Vep" secondAttribute="bottom" constant="20" id="pXE-04-hvu"/>
                             <constraint firstItem="O5f-eA-vpq" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="qfR-hU-yUM"/>
                             <constraint firstItem="gck-rF-aCQ" firstAttribute="top" secondItem="POW-9O-vEK" secondAttribute="bottom" constant="40" id="sqD-b2-J7U"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="rI0-on-QJa" appends="YES" id="I6Z-yV-9aM"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="URLTextField" destination="jxF-ua-l51" id="L2m-rW-glk"/>
@@ -294,6 +300,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iny-0e-vDg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="rI0-on-QJa">
+                    <connections>
+                        <action selector="userDidTapView:" destination="VyP-CL-2a5" id="NhR-xz-phr"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1231" y="-352"/>
         </scene>

@@ -17,7 +17,6 @@ class LoginViewController: UIViewController {
     
     var appDelegate: AppDelegate!
     var keyboardOnScreen = false
- //   var userID: String = ""
     
     // Outlets
     
@@ -56,10 +55,6 @@ class LoginViewController: UIViewController {
             self.setUIEnabled(true)
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("NavigationController") as! UINavigationController
             self.presentViewController(controller, animated: true, completion: nil)
-            
-            //Pass UserID to Tab Bar Controller for later use if user should attempt to post their student location
-    //        let topController: OTMTabBarController = controller.topViewController as! OTMTabBarController
-   //         topController.userID = self.userID
         }
     }
     

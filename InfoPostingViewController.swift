@@ -49,11 +49,7 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
         activityIndicator.hidden = true
     }
     
-/*    override func viewDidAppear(animated: Bool) {
-        print("View did appear")
-        activityIndicator.hidden = true
-    }
-  */
+    
     // Prepare initial view
     func setFirstView() {
         firstStackView.hidden = false
@@ -62,6 +58,7 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
         locationTextField.text = "Enter Location"
         URLTextField.text = "Enter URL"
         submitButton.hidden = true
+        locationButton.hidden = false
         activityIndicator.hidden = true
     }
     
@@ -72,6 +69,7 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
         debugTextLabel.hidden = true
         activityIndicator.hidden = false
         submitButton.hidden = false
+        locationButton.hidden = true
     }
     
     // Centre map display on initial coordinates
@@ -101,6 +99,23 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
         }
         return
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func resignIfFirstResponder(textField: UITextField) {
+        if textField.isFirstResponder() {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func userDidTapView(sender: AnyObject) {
+        resignIfFirstResponder(locationTextField)
+        resignIfFirstResponder(URLTextField)
+    }
+    
 
     
     @IBAction func submitButtonPressed(sender: AnyObject) {
@@ -110,7 +125,7 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
         // Check for basic URL format
         if let url = NSURL(string: URLTextField.text!) {
         }else {
-            self.displayError("Correct URL format has not been used!")
+            self.displayError("Please enter a correct URL")
             return
         }
         
