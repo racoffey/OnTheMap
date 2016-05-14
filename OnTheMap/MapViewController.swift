@@ -38,6 +38,7 @@ class MapViewController: UIViewController{
         
         // Load the locations of a number of students and present them on the map
         loadStudentLocations()
+        debugTextLabel.hidden = true
     }
     
 

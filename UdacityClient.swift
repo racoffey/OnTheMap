@@ -97,11 +97,17 @@ class UdacityClient : NSObject {
                 sendError((error?.localizedDescription)!)
                 return
             }
+
             
             // GUARD: Did we get a successful 2XX response?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Post request failed.")
-                return
+                if ((response as? NSHTTPURLResponse)?.statusCode)! as Int == 403 {
+                    sendError("Incorrect username and/or password")
+                    return
+                } else {
+                    sendError("Post request failed.")
+                    return
+                }
             }
             
             // GUARD: Was there any data returned?
