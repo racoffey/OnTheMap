@@ -16,7 +16,6 @@ class TableViewController: UIViewController {
     @IBOutlet weak var debugTextLabel: UILabel!
 
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         debugTextLabel.hidden = true
@@ -28,6 +27,7 @@ class TableViewController: UIViewController {
         if ParseClient.sharedInstance().studentLocations == [] {
             loadStudentLocations()
         }
+        debugTextLabel.hidden = true
     }
     
     //Load student locations if they have not been loaded earlier or when refresh is requested
@@ -49,6 +49,7 @@ class TableViewController: UIViewController {
     func refreshTableView() {
         ParseClient.sharedInstance().hasFetchedStudentLocations = false
         loadStudentLocations()
+        debugTextLabel.hidden = true
     }
     
     //Present messages to user
@@ -94,8 +95,8 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
             UIApplication.sharedApplication().openURL(NSURL(string: studentLocation.mediaURL!)!)
         }
         else {
-            debugTextLabel.hidden = false
             displayError("Could not present web page")
+            debugTextLabel.hidden = false
         }
     }
 }

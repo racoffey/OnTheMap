@@ -24,6 +24,8 @@
 		A8DE86EA1CB93B71002BDD7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE86E91CB93B71002BDD7A /* Constants.swift */; };
 		A8DE86EC1CB93BE0002BDD7A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE86EB1CB93BE0002BDD7A /* GCDBlackBox.swift */; };
 		A8DE86EE1CB94F75002BDD7A /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE86ED1CB94F75002BDD7A /* UdacityClient.swift */; };
+		A8FF622C1CE670B300BD9602 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FF622B1CE670B300BD9602 /* FBSDKCoreKit.framework */; };
+		A8FF622E1CE670C500BD9602 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FF622D1CE670C500BD9602 /* FBSDKLoginKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,9 @@
 		A8DE86E91CB93B71002BDD7A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A8DE86EB1CB93BE0002BDD7A /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		A8DE86ED1CB94F75002BDD7A /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		A8FF62241CE66DA000BD9602 /* OnTheMap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OnTheMap-Bridging-Header.h"; sourceTree = "<group>"; };
+		A8FF622B1CE670B300BD9602 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		A8FF622D1CE670C500BD9602 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8FF622E1CE670C500BD9602 /* FBSDKLoginKit.framework in Frameworks */,
+				A8FF622C1CE670B300BD9602 /* FBSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,9 +101,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A8CA0AE21CE26D1B00792CEB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8FF622D1CE670C500BD9602 /* FBSDKLoginKit.framework */,
+				A8FF622B1CE670B300BD9602 /* FBSDKCoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A8DE86A31CB91F49002BDD7A = {
 			isa = PBXGroup;
 			children = (
+				A8CA0AE21CE26D1B00792CEB /* Frameworks */,
 				A8DE86E21CB92051002BDD7A /* Model */,
 				A8DE86E11CB9203B002BDD7A /* View */,
 				A8DE86DF1CB92000002BDD7A /* Controller */,
@@ -155,6 +172,7 @@
 				A8D572601CCFEC930065C460 /* InfoPostingViewController.swift */,
 				A8DE86E51CB93854002BDD7A /* LoginViewController.swift */,
 				A8D572581CC2698C0065C460 /* OTMTabBarController.swift */,
+				A8FF62241CE66DA000BD9602 /* OnTheMap-Bridging-Header.h */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -257,7 +275,7 @@
 		A8DE86A41CB91F49002BDD7A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Robert Coffey";
 				TargetAttributes = {
@@ -483,11 +501,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Udacity.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OnTheMap-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -496,11 +521,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Udacity.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OnTheMap-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

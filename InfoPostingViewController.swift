@@ -15,7 +15,6 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
     let regionRadius: CLLocationDistance = 10000
     
     //Initialize variables
-    var studentLocations = [StudentLocation]()
     var locationString: String = ""
     var latitude: Double = 0
     var longitude: Double = 0
@@ -45,6 +44,7 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
 
     }
     
+    // Show activity indicator until map has finnished loading
      func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool){
         activityIndicator.hidden = true
     }
@@ -111,19 +111,23 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
         }
     }
     
+    // Stop editing and hide keyboard when user taps the view
     @IBAction func userDidTapView(sender: AnyObject) {
         resignIfFirstResponder(locationTextField)
         resignIfFirstResponder(URLTextField)
     }
     
 
-    
+    // Send student location information to Udacity server
     @IBAction func submitButtonPressed(sender: AnyObject) {
         
         var studentParameters = [String: AnyObject]()
         
         // Check for basic URL format
         if let url = NSURL(string: URLTextField.text!) {
+            if URLTextField.text == "http://" {
+                self.displayError("Please enter a correct URL")
+            }
         }else {
             self.displayError("Please enter a correct URL")
             return
@@ -162,12 +166,12 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
             }
         }
     }
+    
 
-
+    //Find location entered by user and display in a second stack view
     @IBAction func findLocationButtonPressed(sender: AnyObject) {
         let geocoder = CLGeocoder()
         locationString = locationTextField.text!
-
         
         // Check for basic input errors
         if locationString == "Enter Location" || locationString.characters.count < 2 {

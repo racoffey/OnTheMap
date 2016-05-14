@@ -33,8 +33,6 @@ class ParseClient : NSObject {
     
     //Construct the URL request using input parameters
         let request = NSMutableURLRequest(URL: parseURLFromParameters(parameters, withPathExtension: method))
-        //request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        //request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue(Constants.ParseParameterValues.ApplicationID, forHTTPHeaderField: Constants.ParseParameterKeys.ApplicationID)
         request.addValue(Constants.ParseParameterValues.ApiKey, forHTTPHeaderField: Constants.ParseParameterKeys.ApiKey)
     
@@ -195,7 +193,7 @@ class ParseClient : NSObject {
     }
     
     
-    // Helper functions
+    // Assisting functions
     
     // Create JSON string based on parameters dictionary
     func covertToJson (parameters: [String: AnyObject]) -> String {
@@ -215,7 +213,7 @@ class ParseClient : NSObject {
                 jsonBody.appendContentsOf(string)
             }
         }
-        //Last comma and space is not needed
+        //Last comma and space removed and brace added
         jsonBody.removeAtIndex(jsonBody.endIndex.predecessor())
         jsonBody.removeAtIndex(jsonBody.endIndex.predecessor())
         jsonBody.appendContentsOf("}")
@@ -236,9 +234,6 @@ class ParseClient : NSObject {
             let queryItem = NSURLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-        
-        print(components.URL)
-        
         return components.URL!
     }
     

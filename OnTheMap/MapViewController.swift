@@ -48,6 +48,7 @@ class MapViewController: UIViewController{
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
+    
     //Add annotations for each student location
     func showAnnotation() {
         let initialLocation = CLLocation(latitude: studentLocations[0].latitude, longitude: studentLocations[0].longitude)
@@ -57,6 +58,7 @@ class MapViewController: UIViewController{
         }
     }
     
+    
     //Reload the data and present it again
     func refreshMapView() {
         ParseClient.sharedInstance().hasFetchedStudentLocations = false
@@ -65,10 +67,9 @@ class MapViewController: UIViewController{
         loadStudentLocations()
     }
     
+    
     // Load the student locations and present them
     func loadStudentLocations() {
-        
-
         
         //Get the locations using a shared instance of the Parse Client
         ParseClient.sharedInstance().getStudentLocations() { (success, studentLocations, errorString) in

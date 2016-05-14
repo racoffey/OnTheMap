@@ -15,10 +15,21 @@ class OTMTabBarController: UITabBarController {
     
     // Initialise properties
     var studentLocations: [StudentLocation] = []
-    
+
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+
+    // Logout of Facebook and cancel token
+    func removeFbData() {
+        //Remove FB Data
+        let fbManager = FBSDKLoginManager()
+        fbManager.logOut()
+        FBSDKAccessToken.setCurrentAccessToken(nil)
+    }
+    
     
     // If location button pressed instantiate a Info Posting View Controller and present VC
     @IBAction func locationButtonPressed(sender: AnyObject) {
@@ -40,22 +51,33 @@ class OTMTabBarController: UITabBarController {
         }
     }
     
+    func displayError(errorString: String){
+        if self.selectedViewController!.isKindOfClass(MapViewController) {
+            let controller = self.selectedViewController as! MapViewController
+            controller.displayError(errorString)
+        }
+        if self.selectedViewController!.isKindOfClass(TableViewController){
+            let controller = self.selectedViewController as! TableViewController
+            controller.displayError(errorString)
+        }
+    }
+    
+    
     // If logout button pressed, call logout function in Udacity client and dismiss view contoller, returning to login screen.
     // If there is an error present this on the current view controller window.
     @IBAction func logOutButtonPressed(sender: AnyObject) {
+        
         UdacityClient.sharedInstance().logOutOfSession { (success, errorString) -> Void in
             if success {
+                
+                // If Facebook is being used for login then logout of Facebook and cancel access token
+                if FBSDKAccessToken.currentAccessToken() != nil {
+                    self.removeFbData()
+                }
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                 })
             } else {
-                if self.selectedViewController!.isKindOfClass(MapViewController) {
-                    let controller = self.selectedViewController as! MapViewController
-                    controller.displayError(errorString!)
-                }
-                if self.selectedViewController!.isKindOfClass(TableViewController){
-                    let controller = self.selectedViewController as! TableViewController
-                    controller.displayError(errorString!)
-                }
+                self.displayError(errorString!)
             }
         }
     }

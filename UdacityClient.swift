@@ -7,13 +7,11 @@
 //
 
 import Foundation
+import FBSDKCoreKit
 
 // Udacity AP Client: NSObject
 
 class UdacityClient : NSObject {
-    
-
-    // Properties
     
     // Shared session
     var session = NSURLSession.sharedSession()
@@ -229,7 +227,7 @@ class UdacityClient : NSObject {
     
         
         //Prepare input to POST method
-        let jsonBody = "{\"udacity\": {\"username\": \"\(parameters[Constants.UdacityParameterKeys.Username]!)\", \"password\": \"\(parameters[Constants.UdacityParameterKeys.Password]!)\"}}"
+        let jsonBody = "{\"udacity\": {\"username\": \"\(parameters[Constants.UdacityParameterKeys.Username]!)\", \"password\": \"\(parameters[Constants.UdacityParameterKeys.Password]!)\"}}" 
         parameters = [:]
         
         // Execute POST method
@@ -272,13 +270,62 @@ class UdacityClient : NSObject {
         }
     }
     
+    // Create udacity session using Facebook access token
+    func getSessionIDWithFB(var parameters: [String: AnyObject], completionHandlerForSessionWithFB: (success: Bool, sessionID: String?, userID: String?, errorString: String?) -> Void) {
+        
+        // Get current access token
+        let token = FBSDKAccessToken.currentAccessToken().tokenString! as String
+    
+        //Prepare input to POST method
+        let jsonBody = "{\"facebook_mobile\": {\"access_token\":\"\(token);\"}}"
+        parameters = [:]
+        
+        // Execute POST method
+        taskForPOSTMethod("/session", parameters: parameters, jsonBody: jsonBody) { (results, error) in
+            
+            // Handle error case
+            if error != nil  {
+                completionHandlerForSessionWithFB(success: false, sessionID: nil, userID: nil, errorString: error?.localizedDescription)
+                return
+            }
+            else {
+                
+                //Read results into dictionary object
+                let resultsDict: [String: AnyObject] = (results as? Dictionary)!
+                
+                //Extract User ID from the Account item in the results dictionary and save it for future interactions
+                if let account = resultsDict[Constants.UdacityResponseKeys.Account]{
+                    if let userID = account[Constants.UdacityResponseKeys.UserID] as? String {
+                        self.userID = userID
+                    }
+                    else{
+                        completionHandlerForSessionWithFB(success: false, sessionID: nil, userID: nil, errorString: "Could not find User ID.")
+                        return
+                    }
+                }
+                
+                //Extract the Session ID from the Session item in the results dictionary
+                if let session = resultsDict[Constants.UdacityResponseKeys.Session] {
+                    if let sessionID = session[Constants.UdacityResponseKeys.SessionID] as? String {
+                        completionHandlerForSessionWithFB(success: true, sessionID: sessionID, userID: self.userID, errorString: nil)
+                    }
+                    else{
+                        completionHandlerForSessionWithFB(success: false, sessionID: nil, userID: nil, errorString: "Could not find Session ID")
+                        return
+                    }
+                } else {
+                    completionHandlerForSessionWithFB(success: false, sessionID: nil, userID: nil, errorString: "Could not find Session in response.")
+                }
+            }
+        }
+    }
     
     
-    // Helping functions
+    // Assisting functions
     
     // Create a URL from parameters
     func udacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
-        
+
         let components = NSURLComponents()
         components.scheme = Constants.Udacity.ApiScheme
         components.host = Constants.Udacity.ApiHost
@@ -289,16 +336,13 @@ class UdacityClient : NSObject {
             let queryItem = NSURLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-        
-        print(components.URL)
-        
         return components.URL!
     }
     
     // Parse raw JSON data to NS Object
     private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
         
-        // Remove first 5 characters from raw data
+        // Remove first 5 characters from raw data as required in Udacity API specification
         let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
         
         // Populate result with parsed data and return result

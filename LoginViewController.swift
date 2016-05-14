@@ -26,6 +26,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var facebookLoginButton: BorderedButton!
+
     
     // Life Cycle
     
@@ -41,13 +43,70 @@ class LoginViewController: UIViewController {
         subscribeToNotification(UIKeyboardWillHideNotification, selector: Constants.Selectors.KeyboardWillHide)
         subscribeToNotification(UIKeyboardDidShowNotification, selector: Constants.Selectors.KeyboardDidShow)
         subscribeToNotification(UIKeyboardDidHideNotification, selector: Constants.Selectors.KeyboardDidHide)
+        
+        // If there is an active Facebook access token login without further user input
+        if (FBSDKAccessToken.currentAccessToken() != nil)
+        {
+            print("Facebook token = \(FBSDKAccessToken.currentAccessToken())")
+            print("Token available")
+            getSessionWithFB()
+        }
     }
     
+    
+    // Use FBSDK Login Manager to initiate Facebook login
+    func fbLoginInitiate() {
+        let loginManager = FBSDKLoginManager()
+        loginManager.logInWithReadPermissions(["public_profile", "email"], handler: {(result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+            if (error != nil) {
+                self.displayError("Facebook login failed")
+                self.removeFbData()
+            } else if result.isCancelled {
+                // User Cancellation
+                self.removeFbData()
+            } else {
+                // If successful get Udacity session
+                self.getSessionWithFB()
+            }
+        })
+    }
+    
+    
+    // Log out of Facebook and cancel access token
+    func removeFbData() {
+        //Remove FB Data
+        let fbManager = FBSDKLoginManager()
+        fbManager.logOut()
+        FBSDKAccessToken.setCurrentAccessToken(nil)
+    }
+
+    
+    // Get a Udacity session using Facebook access token
+    func getSessionWithFB() {
+        
+        let parameters = [String: AnyObject]()
+    
+        //Perform login request and if successful complete login
+        UdacityClient.sharedInstance().getSessionIDWithFB(parameters) { (success, sessionID, userID, errorString) in
+            performUIUpdatesOnMain {
+                if success {
+                    self.completeLogin()
+                } else {
+                    self.displayError(errorString!)
+                }
+            }
+        }
+    }
+    
+    
+    // Cancel notifications when view disappears
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromAllNotifications()
     }
     
+    
+    // Complete login by instantiating and presenting navigation view controller
     func completeLogin() {
         performUIUpdatesOnMain {
             //Present navigtation view controller when login is successful
@@ -68,7 +127,6 @@ class LoginViewController: UIViewController {
     }
     
     // Login
-    
     @IBAction func loginPressed(sender: AnyObject) {
         
         userDidTapView(self)
@@ -86,7 +144,6 @@ class LoginViewController: UIViewController {
 
             //Perform login request and if successful complete login
             UdacityClient.sharedInstance().getSessionID(parameters) { (success, sessionID, userID, errorString) in
-              //  if success { self.userID = userID! }
                 performUIUpdatesOnMain {
                     if success {
                         self.completeLogin()
@@ -101,6 +158,11 @@ class LoginViewController: UIViewController {
     //If signup button present then open appropriate Udacity page
     @IBAction func signUpButtonPressed(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string:"https://www.udacity.com/account/auth#!/signup")!)
+    }
+    
+    // If Facebook login button pressed then initiate Facebook login sequence
+    @IBAction func FBSDKLoginButtonPressed(sender: AnyObject) {
+        fbLoginInitiate()
     }
 }
 
@@ -161,6 +223,7 @@ extension LoginViewController: UITextFieldDelegate {
 
 extension LoginViewController {
     
+    // Prepare UI
     private func setUIEnabled(enabled: Bool) {
         usernameTextField.enabled = enabled
         passwordTextField.enabled = enabled
