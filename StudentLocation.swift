@@ -9,7 +9,10 @@
 import Foundation
 import MapKit
 
+// Student location class
 class StudentLocation: NSObject, MKAnnotation {
+ 
+    // Parameters
     
     let createdAt: String
     let firstName: String?
@@ -23,7 +26,7 @@ class StudentLocation: NSObject, MKAnnotation {
     let updatedAt: String
     var coordinate: CLLocationCoordinate2D
     
-    
+    // Init method to create class and populate variables
     init(createdAt: String,
         firstName: String?,
         lastName: String?,
@@ -49,6 +52,8 @@ class StudentLocation: NSObject, MKAnnotation {
         
         super.init()
     }
+    
+    // Name and URL variables can be called
     var title: String? {
         return firstName! + " " + lastName!
     }
