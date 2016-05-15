@@ -167,6 +167,7 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
 
     //Find location entered by user and display in a second stack view
     @IBAction func findLocationButtonPressed(sender: AnyObject) {
+        
         let geocoder = CLGeocoder()
         locationString = locationTextField.text!
         
@@ -175,6 +176,9 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
             self.displayError("No location has been entered!")
             return
         }
+        
+        // Show activity indicator
+        self.activityIndicator.hidden = false
         
         // Attempt to find geographic location based on text string
         geocoder.geocodeAddressString(locationString, completionHandler: {(placemarks, error) -> Void in
@@ -191,7 +195,6 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
                 let location: CLLocation = CLLocation(latitude: coordinates.latitude , longitude: coordinates.longitude)
                 self.centerMapOnLocation(location)
                 self.setSecondView()
-                self.activityIndicator.hidden = false
                 self.latitude = coordinates.latitude
                 self.longitude = coordinates.longitude
             }

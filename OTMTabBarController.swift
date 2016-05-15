@@ -13,12 +13,12 @@ import UIKit
 
 class OTMTabBarController: UITabBarController {
     
-    // Initialise properties
-    var studentLocations: [StudentLocation] = []
-
+    // Outlets
     @IBOutlet weak var logoutButton: UIBarButtonItem!
+    @IBOutlet weak var mapPinButton: UIBarButtonItem!
  
     override func viewDidLoad() {
+        mapPinButton.image = UIImage(named: "map pin")! as UIImage
         super.viewDidLoad()
     }
 

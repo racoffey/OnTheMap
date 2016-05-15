@@ -27,6 +27,7 @@
 		A8FF622C1CE670B300BD9602 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FF622B1CE670B300BD9602 /* FBSDKCoreKit.framework */; };
 		A8FF622E1CE670C500BD9602 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FF622D1CE670C500BD9602 /* FBSDKLoginKit.framework */; };
 		A8FF62301CE8852A00BD9602 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FF622F1CE8852A00BD9602 /* AppData.swift */; };
+		A8FF62321CE8F94E00BD9602 /* AnnotationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FF62311CE8F94E00BD9602 /* AnnotationObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		A8FF622B1CE670B300BD9602 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		A8FF622D1CE670C500BD9602 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		A8FF622F1CE8852A00BD9602 /* AppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		A8FF62311CE8F94E00BD9602 /* AnnotationObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				A8DE86ED1CB94F75002BDD7A /* UdacityClient.swift */,
 				A8D5725A1CC273D20065C460 /* ParseClient.swift */,
 				A8D5725E1CCA33340065C460 /* StudentLocation.swift */,
+				A8FF62311CE8F94E00BD9602 /* AnnotationObject.swift */,
 				A8FF622F1CE8852A00BD9602 /* AppData.swift */,
 			);
 			name = OTM;
@@ -361,6 +364,7 @@
 				A8DE86EA1CB93B71002BDD7A /* Constants.swift in Sources */,
 				A8DE86EE1CB94F75002BDD7A /* UdacityClient.swift in Sources */,
 				A8FF62301CE8852A00BD9602 /* AppData.swift in Sources */,
+				A8FF62321CE8F94E00BD9602 /* AnnotationObject.swift in Sources */,
 				A8DE86EC1CB93BE0002BDD7A /* GCDBlackBox.swift in Sources */,
 				A8D5725B1CC273D20065C460 /* ParseClient.swift in Sources */,
 			);

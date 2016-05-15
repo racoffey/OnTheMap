@@ -19,13 +19,16 @@ class MapViewController: UIViewController{
     //Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+    @IBOutlet weak var tabBarButton: UITabBarItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         //Establish map view delegate and intial settings
         mapView.delegate = self
         activityIndicator.hidden = false
+        
+        //Set image for tab bar button
+        tabBarButton.image = UIImage(named: "map")! as UIImage
     }
     
     
@@ -49,7 +52,8 @@ class MapViewController: UIViewController{
         let initialLocation = CLLocation(latitude: AppData.sharedInstance().studentLocations[0].latitude, longitude: AppData.sharedInstance().studentLocations[0].longitude)
         centerMapOnLocation(initialLocation)
         for studentLocation in AppData.sharedInstance().studentLocations {
-            mapView.addAnnotation(studentLocation)
+            let annotation = AnnotationObject(studentLocation: studentLocation)
+            mapView.addAnnotation(annotation as! MKAnnotation)
         }
     }
     
@@ -83,8 +87,8 @@ extension MapViewController: MKMapViewDelegate, UIGestureRecognizerDelegate {
 
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
-        //Use Student Location as annotation object, cfeate annotation view and assign queued annotations if possible
-        if let annotation = annotation as? StudentLocation {
+        //Use Student Location as annotation object, create annotation view and assign queued annotations if possible
+   //     if let annotation = annotation as? StudentLocation {
             let identifier = "pin"
             var view: MKPinAnnotationView
             if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
@@ -100,18 +104,20 @@ extension MapViewController: MKMapViewDelegate, UIGestureRecognizerDelegate {
             }
             //Return the annotation view
             return view
-        }
-        return nil
+    //    }
+    //    return nil
     }
     
     //If call out it tapped then open URL link in Student Location
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!,
         calloutAccessoryControlTapped control: UIControl!) {
-            let studentLocation = view.annotation as! StudentLocation
-            
+            //let annotation = view.annotation
+            print("Call out was pressed")
+            print("URL =  \(view.annotation?.subtitle)")
             //Check URL is properly formatted and if not present error on map
-            if let url = NSURL(string: studentLocation.mediaURL!) {
-                UIApplication.sharedApplication().openURL(NSURL(string: studentLocation.mediaURL!)!)
+            if let url = NSURL(string: ((view.annotation?.subtitle)!)!) {
+                print("Url being opened = \(url)")
+                UIApplication.sharedApplication().openURL(url)
             }
             else {
                 displayError("Cannot present web page")

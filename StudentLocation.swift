@@ -9,9 +9,9 @@
 import Foundation
 import MapKit
 
-// Student location class
-class StudentLocation: NSObject, MKAnnotation {
- 
+// Student location struct
+struct StudentLocation {
+
     // Parameters
     
     let createdAt: String
@@ -25,18 +25,6 @@ class StudentLocation: NSObject, MKAnnotation {
     let uniqueKey: String
     let updatedAt: String
     var coordinate: CLLocationCoordinate2D
-    
-    // Init method to create class and populate variables
-/*    init(createdAt: String,
-        firstName: String?,
-        lastName: String?,
-        latitude: Double,
-        longitude: Double,
-        mapString: String?,
-        mediaURL: String?,
-        objectId: String,
-        uniqueKey: String,
-        updatedAt: String) {*/
     
     //Init method takes dictionary and reads out parameter settings
     init(parameters: [String : AnyObject]) {
@@ -52,16 +40,7 @@ class StudentLocation: NSObject, MKAnnotation {
         self.uniqueKey = parameters[Constants.ParseResponseKeys.UniqueKey] as! String
         self.updatedAt = parameters[Constants.ParseResponseKeys.UpdatedAt] as! String
         self.coordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-        
-        super.init()
-    }
-    
-    // Name and URL variables can be called
-    var title: String? {
-        return firstName! + " " + lastName!
-    }
-    
-    var subtitle: String? {
-        return mediaURL!
+
     }
 }
+

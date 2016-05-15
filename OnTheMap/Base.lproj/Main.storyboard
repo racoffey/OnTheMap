@@ -31,9 +31,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="hY3-5L-6rF" secondAttribute="trailing" constant="-20" id="0iB-ds-1N2"/>
                             <constraint firstItem="uy9-KV-DSo" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" id="Deg-AO-hn3"/>
                             <constraint firstItem="hY3-5L-6rF" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-20" id="J3u-oY-tDC"/>
-                            <constraint firstItem="hY3-5L-6rF" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Z9W-MP-p3i"/>
+                            <constraint firstItem="hY3-5L-6rF" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Y4z-Sj-C9t"/>
                             <constraint firstItem="uy9-KV-DSo" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="cPB-Yc-24L"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="hY3-5L-6rF" secondAttribute="bottom" id="nXi-x1-td6"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="hY3-5L-6rF" secondAttribute="bottom" id="fFK-uW-1a3"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="map" id="acW-dT-cKf"/>
@@ -42,6 +42,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="uy9-KV-DSo" id="YLc-th-Qh7"/>
                         <outlet property="mapView" destination="hY3-5L-6rF" id="Pi3-Ob-Cke"/>
+                        <outlet property="tabBarButton" destination="acW-dT-cKf" id="2jK-3z-jzo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -309,6 +310,7 @@
                     <tabBarItem key="tabBarItem" title="" image="list" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="locationsTableView" destination="fEe-gl-zR8" id="xpG-8Z-UlH"/>
+                        <outlet property="tabBarButton" destination="cPa-gy-q4n" id="aNV-2b-ecZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -375,6 +377,7 @@
                     </tabBar>
                     <connections>
                         <outlet property="logoutButton" destination="CQP-fl-tvT" id="NQX-pc-AWq"/>
+                        <outlet property="mapPinButton" destination="SX0-n2-Sg3" id="XhS-AC-hir"/>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                     </connections>

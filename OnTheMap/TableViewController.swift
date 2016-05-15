@@ -13,17 +13,20 @@ class TableViewController: UIViewController {
     
     //Outlets
     @IBOutlet weak var locationsTableView: UITableView!
-
+    @IBOutlet weak var tabBarButton: UITabBarItem!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Set list image for tab bar button
+        tabBarButton.image = UIImage(named: "list")! as UIImage
     }
     
     
     override func viewWillAppear(animated: Bool) {
         //Load student locations and present them
-        if AppData.sharedInstance().studentLocations == [] {
+        if AppData.sharedInstance().studentLocations.count == 0 {
             loadStudentLocations()
         }
     }
@@ -70,9 +73,9 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseId) as UITableViewCell!
         
         //Present student name and URL in call out box
-        cell.textLabel!.text = studentLocation.title!
+        cell.textLabel!.text = studentLocation.firstName! + " " + studentLocation.lastName!
         cell.imageView?.image = image
-        cell.detailTextLabel?.text = studentLocation.subtitle!
+        cell.detailTextLabel?.text = studentLocation.mediaURL
         
         return cell
     }
