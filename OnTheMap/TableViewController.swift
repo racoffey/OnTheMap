@@ -13,21 +13,19 @@ class TableViewController: UIViewController {
     
     //Outlets
     @IBOutlet weak var locationsTableView: UITableView!
-    @IBOutlet weak var debugTextLabel: UILabel!
+
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        debugTextLabel.hidden = true
     }
     
     
     override func viewWillAppear(animated: Bool) {
         //Load student locations and present them
-        if ParseClient.sharedInstance().studentLocations == [] {
+        if AppData.sharedInstance().studentLocations == [] {
             loadStudentLocations()
         }
-        debugTextLabel.hidden = true
     }
     
     //Load student locations if they have not been loaded earlier or when refresh is requested
@@ -47,18 +45,17 @@ class TableViewController: UIViewController {
     
     //Reload student locations and present them again
     func refreshTableView() {
-        ParseClient.sharedInstance().hasFetchedStudentLocations = false
+        AppData.sharedInstance().hasFetchedStudentLocations = false
         loadStudentLocations()
-        debugTextLabel.hidden = true
     }
     
     //Present messages to user
     func displayError(error: String) {
-        print(error)
-        performUIUpdatesOnMain {
-            self.debugTextLabel.text = error
-            self.debugTextLabel.hidden = false
-        }
+        
+        // Show error to user using Alert Controller
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil ))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
 
@@ -69,7 +66,7 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let CellReuseId = "StudentLocationCell"
         let image = UIImage(named: "map pin")
-        let studentLocation = ParseClient.sharedInstance().studentLocations[indexPath.row]
+        let studentLocation = AppData.sharedInstance().studentLocations[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseId) as UITableViewCell!
         
         //Present student name and URL in call out box
@@ -82,13 +79,12 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
     
     //Provide number of rows in table
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Number of student locations = \(ParseClient.sharedInstance().studentLocations.count)")
-        return ParseClient.sharedInstance().studentLocations.count
+        return AppData.sharedInstance().studentLocations.count
     }
     
     //Take action if user has selected a row
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let studentLocation = ParseClient.sharedInstance().studentLocations[indexPath.row]
+        let studentLocation = AppData.sharedInstance().studentLocations[indexPath.row]
         
         //Check URL is properly formatted and if so attempt to open it
         if let url = NSURL(string: studentLocation.mediaURL!) {
@@ -96,7 +92,6 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else {
             displayError("Could not present web page")
-            debugTextLabel.hidden = false
         }
     }
 }

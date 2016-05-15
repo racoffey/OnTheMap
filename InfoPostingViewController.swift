@@ -27,7 +27,6 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
     @IBOutlet weak var secondStackView: UIStackView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var URLTextField: UITextField!
-    @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
@@ -54,7 +53,6 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
     func setFirstView() {
         firstStackView.hidden = false
         secondStackView.hidden = true
-        debugTextLabel.hidden = true
         locationTextField.text = "Enter Location"
         URLTextField.text = "Enter URL"
         submitButton.hidden = true
@@ -66,7 +64,6 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
     func setSecondView() {
         firstStackView.hidden = true
         secondStackView.hidden = false
-        debugTextLabel.hidden = true
         activityIndicator.hidden = false
         submitButton.hidden = false
         locationButton.hidden = true
@@ -82,11 +79,11 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
     
     //Present message to user
     func displayError(error: String) {
-        print(error)
-        performUIUpdatesOnMain {
-            self.debugTextLabel.text = error
-            self.debugTextLabel.hidden = false
-        }
+        
+        // Show error to user using Alert Controller
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil ))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     //Clear text when editing textfields for the first time
@@ -127,6 +124,7 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
         if let url = NSURL(string: URLTextField.text!) {
             if URLTextField.text == "http://" {
                 self.displayError("Please enter a correct URL")
+                return
             }
         }else {
             self.displayError("Please enter a correct URL")
@@ -149,7 +147,6 @@ class InfoPostingViewController: UIViewController, UITextFieldDelegate, MKMapVie
                 //Post student location
                 ParseClient.sharedInstance().postStudentLocation(studentParameters, completionHandlerForPostSL: { (success, errorString) -> Void in
                     if success {
-                        self.displayError("Student Location updated successfully!")
                         self.dismissViewControllerAnimated(true) { () -> Void in
                         }
                     }

@@ -26,6 +26,7 @@
 		A8DE86EE1CB94F75002BDD7A /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE86ED1CB94F75002BDD7A /* UdacityClient.swift */; };
 		A8FF622C1CE670B300BD9602 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FF622B1CE670B300BD9602 /* FBSDKCoreKit.framework */; };
 		A8FF622E1CE670C500BD9602 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FF622D1CE670C500BD9602 /* FBSDKLoginKit.framework */; };
+		A8FF62301CE8852A00BD9602 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FF622F1CE8852A00BD9602 /* AppData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		A8FF62241CE66DA000BD9602 /* OnTheMap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OnTheMap-Bridging-Header.h"; sourceTree = "<group>"; };
 		A8FF622B1CE670B300BD9602 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		A8FF622D1CE670C500BD9602 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		A8FF622F1CE8852A00BD9602 /* AppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				A8DE86ED1CB94F75002BDD7A /* UdacityClient.swift */,
 				A8D5725A1CC273D20065C460 /* ParseClient.swift */,
 				A8D5725E1CCA33340065C460 /* StudentLocation.swift */,
+				A8FF622F1CE8852A00BD9602 /* AppData.swift */,
 			);
 			name = OTM;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				A8D572591CC2698C0065C460 /* OTMTabBarController.swift in Sources */,
 				A8DE86EA1CB93B71002BDD7A /* Constants.swift in Sources */,
 				A8DE86EE1CB94F75002BDD7A /* UdacityClient.swift in Sources */,
+				A8FF62301CE8852A00BD9602 /* AppData.swift in Sources */,
 				A8DE86EC1CB93BE0002BDD7A /* GCDBlackBox.swift in Sources */,
 				A8D5725B1CC273D20065C460 /* ParseClient.swift in Sources */,
 			);

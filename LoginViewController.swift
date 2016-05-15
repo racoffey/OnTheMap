@@ -23,7 +23,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: BorderedButton!
-    @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var facebookLoginButton: BorderedButton!
@@ -47,10 +46,12 @@ class LoginViewController: UIViewController {
         // If there is an active Facebook access token login without further user input
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
-            print("Facebook token = \(FBSDKAccessToken.currentAccessToken())")
-            print("Token available")
             getSessionWithFB()
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        setUIEnabled(true)
     }
     
     
@@ -110,20 +111,24 @@ class LoginViewController: UIViewController {
     func completeLogin() {
         performUIUpdatesOnMain {
             //Present navigtation view controller when login is successful
-            self.debugTextLabel.text = ""
             self.setUIEnabled(true)
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("NavigationController") as! UINavigationController
             self.presentViewController(controller, animated: true, completion: nil)
+            
         }
     }
     
     //Present message to user
     func displayError(error: String, debugLabelText: String? = nil) {
         print(error)
-        performUIUpdatesOnMain {
-            self.setUIEnabled(true)
-            self.debugTextLabel.text = error
-        }
+        
+        // Show error to user using Alert Controller
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil ))
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        // Ensure UI is fully enabled again
+        setUIEnabled(true)
     }
     
     // Login
@@ -133,7 +138,7 @@ class LoginViewController: UIViewController {
         
         //Check that username and password field have contents
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            debugTextLabel.text = "Username or Password Empty."
+            displayError("Username or Password empty")
         } else {
             
             //Prepare parameters for login request
@@ -228,8 +233,6 @@ extension LoginViewController {
         usernameTextField.enabled = enabled
         passwordTextField.enabled = enabled
         loginButton.enabled = enabled
-        debugTextLabel.text = ""
-        debugTextLabel.enabled = enabled
         
         // adjust login button alpha
         if enabled {

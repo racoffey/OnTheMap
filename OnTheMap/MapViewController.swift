@@ -13,15 +13,11 @@ import MapKit
 class MapViewController: UIViewController{
 
     // Set the size of then intial map view
-    let regionRadius: CLLocationDistance = 1000000
-    
-    //Initialise student locations array
-    var studentLocations = [StudentLocation]()
+    let regionRadius: CLLocationDistance = Constants.Map.RegionRadius
     
     
     //Outlets
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
 
@@ -29,7 +25,6 @@ class MapViewController: UIViewController{
         super.viewDidLoad()
         //Establish map view delegate and intial settings
         mapView.delegate = self
-        debugTextLabel.hidden = true
         activityIndicator.hidden = false
     }
     
@@ -38,7 +33,6 @@ class MapViewController: UIViewController{
         
         // Load the locations of a number of students and present them on the map
         loadStudentLocations()
-        debugTextLabel.hidden = true
     }
     
 
@@ -52,9 +46,9 @@ class MapViewController: UIViewController{
     
     //Add annotations for each student location
     func showAnnotation() {
-        let initialLocation = CLLocation(latitude: studentLocations[0].latitude, longitude: studentLocations[0].longitude)
+        let initialLocation = CLLocation(latitude: AppData.sharedInstance().studentLocations[0].latitude, longitude: AppData.sharedInstance().studentLocations[0].longitude)
         centerMapOnLocation(initialLocation)
-        for studentLocation in studentLocations {
+        for studentLocation in AppData.sharedInstance().studentLocations {
             mapView.addAnnotation(studentLocation)
         }
     }
@@ -62,9 +56,7 @@ class MapViewController: UIViewController{
     
     //Reload the data and present it again
     func refreshMapView() {
-        ParseClient.sharedInstance().hasFetchedStudentLocations = false
-        debugTextLabel.hidden = true
-        studentLocations.removeAll()
+        AppData.sharedInstance().hasFetchedStudentLocations = false
         loadStudentLocations()
     }
     
@@ -76,7 +68,6 @@ class MapViewController: UIViewController{
         ParseClient.sharedInstance().getStudentLocations() { (success, studentLocations, errorString) in
             performUIUpdatesOnMain {
                 if success {
-                    self.studentLocations = studentLocations
                     self.showAnnotation()
                 }
                 else {
@@ -134,11 +125,10 @@ extension MapViewController: MKMapViewDelegate, UIGestureRecognizerDelegate {
     
     //Present messages to user
     func displayError(error: String) {
-        print(error)
-        performUIUpdatesOnMain {
-            self.debugTextLabel.text = error
-            self.debugTextLabel.hidden = false
-        }
+        // Show error to user using Alert Controller
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil ))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
 

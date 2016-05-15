@@ -27,7 +27,7 @@ class StudentLocation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     
     // Init method to create class and populate variables
-    init(createdAt: String,
+/*    init(createdAt: String,
         firstName: String?,
         lastName: String?,
         latitude: Double,
@@ -36,18 +36,21 @@ class StudentLocation: NSObject, MKAnnotation {
         mediaURL: String?,
         objectId: String,
         uniqueKey: String,
-        updatedAt: String) {
+        updatedAt: String) {*/
+    
+    //Init method takes dictionary and reads out parameter settings
+    init(parameters: [String : AnyObject]) {
 
-        self.createdAt = createdAt
-        self.firstName = firstName
-        self.lastName = lastName
-        self.latitude = latitude as CLLocationDegrees
-        self.longitude = longitude as CLLocationDegrees
-        self.mapString = mapString
-        self.mediaURL = mediaURL
-        self.objectId = objectId
-        self.uniqueKey = uniqueKey
-        self.updatedAt = updatedAt
+        self.createdAt = parameters[Constants.ParseResponseKeys.CreatedAt] as! String
+        self.firstName = parameters[Constants.ParseResponseKeys.FirstName] as! String
+        self.lastName = parameters[Constants.ParseResponseKeys.LastName] as! String
+        self.latitude = parameters[Constants.ParseResponseKeys.Latitude] as! CLLocationDegrees
+        self.longitude = parameters[Constants.ParseResponseKeys.Longitude] as! CLLocationDegrees
+        self.mapString = parameters[Constants.ParseResponseKeys.MapString] as! String
+        self.mediaURL = parameters[Constants.ParseResponseKeys.MediaURL] as! String
+        self.objectId = parameters[Constants.ParseResponseKeys.ObjectId] as! String
+        self.uniqueKey = parameters[Constants.ParseResponseKeys.UniqueKey] as! String
+        self.updatedAt = parameters[Constants.ParseResponseKeys.UpdatedAt] as! String
         self.coordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
         
         super.init()

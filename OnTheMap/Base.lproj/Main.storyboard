@@ -25,43 +25,22 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uy9-KV-DSo">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xix-DC-raF">
-                                <rect key="frame" x="0.0" y="510" width="600" height="38"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="y0P-j8-OvJ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="hY3-5L-6rF" secondAttribute="trailing" constant="-20" id="0iB-ds-1N2"/>
-                            <constraint firstItem="Xix-DC-raF" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="2VZ-HZ-S85"/>
-                            <constraint firstItem="Xix-DC-raF" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="20" id="ChZ-CN-M7F"/>
                             <constraint firstItem="uy9-KV-DSo" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" id="Deg-AO-hn3"/>
                             <constraint firstItem="hY3-5L-6rF" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-20" id="J3u-oY-tDC"/>
                             <constraint firstItem="hY3-5L-6rF" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Z9W-MP-p3i"/>
                             <constraint firstItem="uy9-KV-DSo" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="cPB-Yc-24L"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="hY3-5L-6rF" secondAttribute="bottom" id="nXi-x1-td6"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="Xix-DC-raF" secondAttribute="bottom" constant="40" id="te7-Ec-i4Z"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Xix-DC-raF" secondAttribute="trailing" id="zdN-Yd-OgZ"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="te7-Ec-i4Z"/>
-                            </mask>
-                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="map" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="uy9-KV-DSo" id="YLc-th-Qh7"/>
-                        <outlet property="debugTextLabel" destination="Xix-DC-raF" id="KjL-v3-VYe"/>
                         <outlet property="mapView" destination="hY3-5L-6rF" id="Pi3-Ob-Cke"/>
                     </connections>
                 </viewController>
@@ -246,33 +225,14 @@
                                     <action selector="submitButtonPressed:" destination="VyP-CL-2a5" eventType="touchUpInside" id="Lha-uh-QWg"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O29-4h-hcZ">
-                                <rect key="frame" x="20" y="280" width="560" height="40"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="TRO-W3-YnI"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="ZcB-6C-b7y"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ZcB-6C-b7y"/>
-                                    </mask>
-                                </variation>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.84392755681818177" green="0.84392755681818177" blue="0.84392755681818177" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="gck-rF-aCQ" firstAttribute="top" secondItem="O29-4h-hcZ" secondAttribute="bottom" id="0Qz-OX-J1H"/>
                             <constraint firstItem="l95-U9-nBG" firstAttribute="trailing" secondItem="fX3-9w-fJj" secondAttribute="trailingMargin" id="DLL-2x-A2T"/>
                             <constraint firstItem="M8g-Ud-kQ5" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="FhP-eW-oOX"/>
                             <constraint firstItem="gck-rF-aCQ" firstAttribute="top" secondItem="O5f-eA-vpq" secondAttribute="bottom" constant="290" id="HbK-L4-4Ja"/>
                             <constraint firstItem="POW-9O-vEK" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="IOQ-4l-KZ3"/>
-                            <constraint firstItem="O29-4h-hcZ" firstAttribute="trailing" secondItem="fX3-9w-fJj" secondAttribute="trailingMargin" id="JRH-cB-LAb"/>
-                            <constraint firstItem="O29-4h-hcZ" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="N26-R4-CcL"/>
                             <constraint firstAttribute="bottomMargin" secondItem="M8g-Ud-kQ5" secondAttribute="bottom" id="OmH-fV-SkV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M8g-Ud-kQ5" secondAttribute="trailing" id="S9W-Xe-dqj"/>
                             <constraint firstItem="l95-U9-nBG" firstAttribute="leading" secondItem="fX3-9w-fJj" secondAttribute="leadingMargin" id="aRo-Xt-4oL"/>
@@ -290,7 +250,6 @@
                     <connections>
                         <outlet property="URLTextField" destination="jxF-ua-l51" id="L2m-rW-glk"/>
                         <outlet property="activityIndicator" destination="O5f-eA-vpq" id="8Wc-DM-jGQ"/>
-                        <outlet property="debugTextLabel" destination="O29-4h-hcZ" id="1VA-hM-KqQ"/>
                         <outlet property="firstStackView" destination="VGD-Yp-ayi" id="FNv-6R-Ikl"/>
                         <outlet property="locationButton" destination="l95-U9-nBG" id="Zgg-LN-KFV"/>
                         <outlet property="locationTextField" destination="wXB-f1-iWC" id="AlT-e9-nR6"/>
@@ -338,32 +297,17 @@
                                     <outlet property="delegate" destination="8rJ-Kc-sve" id="Jr2-xP-03L"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWm-Ua-DIG">
-                                <rect key="frame" x="0.0" y="280" width="600" height="40"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="YYx-cG-dW9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eWm-Ua-DIG" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="2cv-2v-yYX"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eWm-Ua-DIG" secondAttribute="trailing" id="630-UQ-PpO"/>
                             <constraint firstItem="fEe-gl-zR8" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="7gk-Tq-Sxh"/>
                             <constraint firstItem="fEe-gl-zR8" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-20" id="SUW-TL-7hJ"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="fEe-gl-zR8" secondAttribute="bottom" id="TGJ-RK-7hg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fEe-gl-zR8" secondAttribute="trailing" constant="-20" id="ZAw-zH-DOC"/>
-                            <constraint firstItem="eWm-Ua-DIG" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="20" id="ecs-xQ-PZk"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="list" id="cPa-gy-q4n"/>
                     <connections>
-                        <outlet property="debugTextLabel" destination="eWm-Ua-DIG" id="SYL-yS-Ats"/>
                         <outlet property="locationsTableView" destination="fEe-gl-zR8" id="xpG-8Z-UlH"/>
                     </connections>
                 </viewController>
@@ -498,7 +442,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsm-oR-dCL">
-                                        <rect key="frame" x="0.0" y="298" width="560" height="30"/>
+                                        <rect key="frame" x="0.0" y="298" width="560" height="149"/>
                                         <state key="normal" title="Don't have an account? Sign Up">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -506,12 +450,6 @@
                                             <action selector="signUpButtonPressed:" destination="TzF-QX-KLJ" eventType="touchUpInside" id="Eru-PI-7B7"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWZ-bh-2gI">
-                                        <rect key="frame" x="0.0" y="338" width="560" height="109"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yxX-yO-qYL" customClass="BorderedButton" customModule="OnTheMap" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="457" width="560" height="44"/>
                                         <constraints>
@@ -544,7 +482,6 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="debugTextLabel" destination="sWZ-bh-2gI" id="uwN-qW-1K1"/>
                         <outlet property="facebookLoginButton" destination="yxX-yO-qYL" id="xSf-XK-dkN"/>
                         <outlet property="loginButton" destination="gTX-7O-NtL" id="ej8-pK-7P3"/>
                         <outlet property="movieImageView" destination="GiP-ZQ-Hg4" id="lHj-iw-fc1"/>

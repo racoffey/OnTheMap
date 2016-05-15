@@ -11,12 +11,6 @@ import Foundation
 // Parse API client
 
 class ParseClient : NSObject {
-
-    
-    // Properties
-    
-    var studentLocations: [StudentLocation] = []
-    var hasFetchedStudentLocations = false
     
     // Shared session
     var session = NSURLSession.sharedSession()
@@ -25,6 +19,7 @@ class ParseClient : NSObject {
     // Initializers
     
     override init() {
+        AppData.sharedInstance().studentLocations = []
         super.init()
     }
   
@@ -46,7 +41,7 @@ class ParseClient : NSObject {
     
             //Was there an error?
             guard (error == nil) else {
-                sendError("The parse GET request failed")
+                sendError("The parse GET request failed.")
                 return
             }
     
@@ -129,11 +124,11 @@ class ParseClient : NSObject {
         
         //Establish parameters for GET request
         let method = "/StudentLocation"
-        let parameters: [String: AnyObject] = [Constants.ParseParameterKeys.Limit : Constants.ParseParameterValues.Limit]
+        let parameters: [String: AnyObject] = [Constants.ParseParameterKeys.Limit : Constants.ParseParameterValues.Limit, Constants.ParseParameterKeys.Order : Constants.ParseParameterValues.Order]
         
         //If student locations have already been fetched, no need to fetch again unless specific refresh requested
-        if hasFetchedStudentLocations {
-                completionHandlerForSession(success: true, studentLocations: self.studentLocations, errorString: nil)
+        if AppData.sharedInstance().hasFetchedStudentLocations {
+                completionHandlerForSession(success: true, studentLocations: AppData.sharedInstance().studentLocations, errorString: nil)
                 return
         }
         
@@ -142,30 +137,19 @@ class ParseClient : NSObject {
 
             // Handle error case
             if error != nil {
-                completionHandlerForSession(success: false, studentLocations: self.studentLocations, errorString: "Failed to get student locations.")
+                completionHandlerForSession(success: false, studentLocations: AppData.sharedInstance().studentLocations, errorString: "Failed to get student locations. \(error)")
             } else {
                 //Put results into a data object and extract each student location into the Student Locations array and return array
-                self.studentLocations.removeAll()
+                AppData.sharedInstance().studentLocations.removeAll()
                 var resultsDict = results as! [String: AnyObject]
                 let resultsArray = resultsDict["results"] as! [AnyObject]
                 for item in resultsArray {
                     let dict = item as! [String: AnyObject]
-                    let studentLocation = StudentLocation(
-                    createdAt: dict[Constants.ParseResponseKeys.CreatedAt] as! String,
-                    firstName: dict[Constants.ParseResponseKeys.FirstName] as! String,
-                    lastName: dict[Constants.ParseResponseKeys.LastName] as! String,
-                    latitude: dict[Constants.ParseResponseKeys.Latitude] as! Double,
-                    longitude: dict[Constants.ParseResponseKeys.Longitude] as! Double,
-                    mapString: dict[Constants.ParseResponseKeys.MapString] as! String,
-                    mediaURL: dict[Constants.ParseResponseKeys.MediaURL] as! String,
-                    objectId: dict[Constants.ParseResponseKeys.ObjectId] as! String,
-                    uniqueKey: dict[Constants.ParseResponseKeys.UniqueKey] as! String,
-                    updatedAt: dict[Constants.ParseResponseKeys.UpdatedAt] as! String)
-                        
-                    self.studentLocations.append(studentLocation)
+                    let studentLocation = StudentLocation(parameters: dict)
+                    AppData.sharedInstance().studentLocations.append(studentLocation)
                 }
-                self.hasFetchedStudentLocations = true
-                completionHandlerForSession(success: true, studentLocations: self.studentLocations, errorString: nil)
+                AppData.sharedInstance().hasFetchedStudentLocations = true
+                completionHandlerForSession(success: true, studentLocations: AppData.sharedInstance().studentLocations, errorString: nil)
             }
         }
     }
