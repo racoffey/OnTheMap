@@ -1,0 +1,7 @@
+# On The Map
+
+This program places Udacity students _"on the map"_.
+
+The program provides login using Udacity username and password or through the users Facebook credentials.
+
+It shows the location of the last 100 student location updates on a map and allows the user to enter their own location plus URL of interest.
